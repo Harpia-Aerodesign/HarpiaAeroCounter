@@ -3,9 +3,12 @@ import os
 from config import SAE_COUNTER_GITHUB, SAE_COUNTER_PATH, UNTRACKED_PATH
 
 class GitManager:
-    def __init__(self, github_url, path):
+    def __init__(self, github_url, path, username=None, password=None):
         self.has_changes = False
-        self.github_url = github_url
+        if username is None:
+            self.github_url = github_url
+        else:
+            self.github_url = github_url.format(username=username, password=password)
         self.path = os.path.join(UNTRACKED_PATH, path)
         self.repo = None
 
@@ -18,6 +21,7 @@ class GitManager:
                 self.has_changes = True
         except git.exc.NoSuchPathError:
             git.Repo.clone_from(self.github_url, self.path)
+            self.has_changes = True
 
 if __name__ == "__main__":
     # Exemplo de utilização.
