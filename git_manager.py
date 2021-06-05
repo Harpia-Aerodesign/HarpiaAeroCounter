@@ -1,11 +1,12 @@
 import git
-from config import SAE_COUNTER_GITHUB, SAE_COUNTER_PATH
+import os
+from config import SAE_COUNTER_GITHUB, SAE_COUNTER_PATH, UNTRACKED_PATH
 
 class GitManager:
     def __init__(self, github_url, path):
         self.has_changes = False
         self.github_url = github_url
-        self.path = path
+        self.path = os.path.join(UNTRACKED_PATH, path)
         self.repo = None
 
     def pull(self):
