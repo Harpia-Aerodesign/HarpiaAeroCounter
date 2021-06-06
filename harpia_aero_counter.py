@@ -45,6 +45,31 @@ class HarpiaAeroCounter:
                 urllib.parse.quote(OVERLEAF_PASSWORD)
             )
 
+    def compiler(self, project):
+        Popen(
+            ["pdflatex", "-interaction=nonstopmode", "main.tex"],
+            cwd=project['repo'].path,
+            stdout=DEVNULL,
+            stderr=STDOUT
+        ).wait()
+        os.rename(
+            os.path.join(project['repo'].path, 'main.pdf'),
+            os.path.join(UNTRACKED_PATH, project['path']+".pdf")
+        )
+
+    def counter(self, project):
+        Popen(
+            ["python", "PyAeroCounter.py", "-i", "../"+project['path']+".pdf"],
+            cwd=self.sae_counter_manager.path,
+            stdout=DEVNULL,
+            stderr=STDOUT
+        ).wait()
+        for fname in glob(os.path.join(self.sae_counter_manager.path, '*.txt')):
+            os.rename(
+                fname,
+                os.path.join(UNTRACKED_PATH, project['path']+"_"+fname.split("/")[-1])
+            )
+
     def loop(self):
         redo = False
         self.sae_counter_manager.pull()
@@ -54,29 +79,8 @@ class HarpiaAeroCounter:
             project['repo'].pull()
             if project['repo'].has_changes or redo:
                 print("{name}{spaces}mudou".format(name=project['name'], spaces=" "*(40-len(project['name']))))
-                # Compilando o PDF.
-                Popen(
-                    ["pdflatex", "-interaction=nonstopmode", "main.tex"],
-                    cwd=project['repo'].path,
-                    stdout=DEVNULL,
-                    stderr=STDOUT
-                ).wait()
-                os.rename(
-                    os.path.join(project['repo'].path, 'main.pdf'),
-                    os.path.join(UNTRACKED_PATH, project['path']+".pdf")
-                )
-                # Contando as palavras.
-                Popen(
-                    ["python", "PyAeroCounter.py", "-i", "../"+project['path']+".pdf"],
-                    cwd=self.sae_counter_manager.path,
-                    stdout=DEVNULL,
-                    stderr=STDOUT
-                ).wait()
-                for fname in glob(os.path.join(self.sae_counter_manager.path, '*.txt')):
-                    os.rename(
-                        fname,
-                        os.path.join(UNTRACKED_PATH, project['path']+"_"+fname.split("/")[-1])
-                    )
+                self.compiler(project)  # Compilando o PDF.
+                self.counter(project)   # Contando as palavras.
             else:
                 print("{name}{spaces}ok".format(name=project['name'], spaces=" "*(43-len(project['name']))))
             with open(os.path.join(UNTRACKED_PATH, project['path']+"_logfile.txt"), 'r') as fd:
