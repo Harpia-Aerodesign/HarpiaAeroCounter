@@ -1,5 +1,7 @@
 import urllib
+import os
 
+from subprocess import Popen, DEVNULL, STDOUT
 from git_manager import GitManager
 from config import OVERLEAF_PASSWORD, OVERLEAF_USER, PROJECTS_OVERLEAF, SAE_COUNTER_GITHUB, SAE_COUNTER_PATH, UNTRACKED_PATH
 
@@ -21,17 +23,36 @@ class HarpiaAeroCounter:
         self.sae_counter_manager.pull()
         if (self.sae_counter_manager.has_changes):
             redo = True # Precisa atualizar tudo.
-        else:
-            for project in self.projects_list:
-                project['repo'].pull()
-                if project['repo'].has_changes or redo:
-                    print(project['name'], "        mudou")
-                    # Compilar o PDF aqui
-                    # Contar as palavras aqui
-                    project['repo'].has_changes = False
-                    redo = False
-                else:
-                    print(project['name'], "    não mudou")
+        for project in self.projects_list:
+            project['repo'].pull()
+            if project['repo'].has_changes or redo:
+                print(project['name'], "\t\t    mudou")
+                # Compilaando o PDF.
+                Popen(
+                    ["pdflatex", "-interaction=nonstopmode", "main.tex"],
+                    cwd=project['repo'].path,
+                    stdout=DEVNULL,
+                    stderr=STDOUT
+                ).wait()
+                os.rename(
+                    os.path.join(project['repo'].path, 'main.pdf'),
+                    os.path.join(UNTRACKED_PATH, project['path']+".pdf")
+                )
+                # Contando as palavras.
+                Popen(
+                    ["python", "PyAeroCounter.py", "-i", "../"+project['path']+".pdf"],
+                    cwd=self.sae_counter_manager.path,
+                    stdout=DEVNULL,
+                    stderr=STDOUT
+                ).wait()
+                os.rename(
+                    os.path.join(self.sae_counter_manager.path, 'logfile.txt'),
+                    os.path.join(UNTRACKED_PATH, project['path']+".txt")
+                )
+                # Mostrar os resultados
+            else:
+                print(project['name'], "\t\tnão mudou")
+        redo = False
 
 
 if __name__ == "__main__":
