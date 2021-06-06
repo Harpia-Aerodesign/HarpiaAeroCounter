@@ -23,6 +23,7 @@ class GitManager:
             git.Repo.clone_from(self.github_url, self.path)
             self.has_changes = True
 
+
 if __name__ == "__main__":
     # Exemplo de utilização.
     gitManager = GitManager(SAE_COUNTER_GITHUB, SAE_COUNTER_PATH)
