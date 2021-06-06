@@ -87,6 +87,7 @@ class HarpiaAeroCounter:
                 lines = fd.readlines()
                 int_values = [int(s) for s in " ".join(lines).split() if s.isdigit()]
                 self.content[project['path']] = dict(zip(HarpiaAeroCounter.LOG_KEYS, int_values))
+                self.content[project['path']]['name'] = project['name']
         redo = False
 
     def print(self):
@@ -94,9 +95,9 @@ class HarpiaAeroCounter:
         print("#"*230)
         print("#" + "\t\t".join(["\t\t\t"] + HarpiaAeroCounter.LOG_HEAD) + "   #")
         print("#" + "-"*228 + "#")
-        for key, values in self.content.items():
-            posfix = "\t" * int((29-len(key))/8)
-            print("# {key}{posfix}\t\t{words}\t\t{non_words}\t\t\t{fig_files}\t\t\t{fig_words}\t\t\t{non_words_fig}\t\t\t{npages}\t\t\t{n_special_pages}\t\t\t\t{math_words}\t             #".format(key=key, posfix=posfix, **values))
+        for values in self.content.values():
+            posfix = "\t" * int((29-len(values['name']))/8)
+            print("# {name}{posfix}\t\t{words}\t\t{non_words}\t\t\t{fig_files}\t\t\t{fig_words}\t\t\t{non_words_fig}\t\t\t{npages}\t\t\t{n_special_pages}\t\t\t\t{math_words}\t             #".format(posfix=posfix, **values))
         print("#"*230)
         print("\n")
 
