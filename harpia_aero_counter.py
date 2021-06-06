@@ -1,6 +1,7 @@
 import urllib
 import os
 
+from glob import glob
 from subprocess import Popen, DEVNULL, STDOUT
 from git_manager import GitManager
 from config import OVERLEAF_PASSWORD, OVERLEAF_USER, PROJECTS_OVERLEAF, SAE_COUNTER_GITHUB, SAE_COUNTER_PATH, UNTRACKED_PATH
@@ -45,10 +46,11 @@ class HarpiaAeroCounter:
                     stdout=DEVNULL,
                     stderr=STDOUT
                 ).wait()
-                os.rename(
-                    os.path.join(self.sae_counter_manager.path, 'logfile.txt'),
-                    os.path.join(UNTRACKED_PATH, project['path']+".txt")
-                )
+                for fname in glob(os.path.join(self.sae_counter_manager.path, '*.txt')):
+                    os.rename(
+                        fname,
+                        os.path.join(UNTRACKED_PATH, project['path']+"_"+fname.split("/")[-1])
+                    )
                 # Mostrar os resultados
             else:
                 print(project['name'], "\t\tnão mudou")
