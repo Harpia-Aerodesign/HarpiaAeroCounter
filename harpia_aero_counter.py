@@ -27,7 +27,7 @@ class HarpiaAeroCounter:
             project['repo'].pull()
             if project['repo'].has_changes or redo:
                 print(project['name'], "\t\t    mudou")
-                # Compilaando o PDF.
+                # Compilando o PDF.
                 Popen(
                     ["pdflatex", "-interaction=nonstopmode", "main.tex"],
                     cwd=project['repo'].path,
