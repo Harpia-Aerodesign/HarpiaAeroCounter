@@ -7,7 +7,7 @@ from pprint import pprint
 from glob import glob
 from subprocess import Popen, DEVNULL, STDOUT
 from git_manager import GitManager
-from config import OVERLEAF_PASSWORD, OVERLEAF_USER, PROJECTS_OVERLEAF, SAE_COUNTER_GITHUB, SAE_COUNTER_PATH, UNTRACKED_PATH
+from config import OVERLEAF_PASSWORD, OVERLEAF_USER, PROJECTS_OVERLEAF, SAE_COUNTER_GITHUB, SAE_COUNTER_PATH, UNTRACKED_PATH, COMPILER, COMPILER_PARAMS
 
 
 class HarpiaAeroCounter:
@@ -47,13 +47,13 @@ class HarpiaAeroCounter:
 
     def compiler(self, project):
         Popen(
-            ["pdflatex", "-interaction=nonstopmode", "main.tex"],
+            [COMPILER, COMPILER_PARAMS, "main.tex"],
             cwd=project['repo'].path,
             stdout=DEVNULL,
             stderr=STDOUT
         ).wait()
         os.rename(
-            os.path.join(project['repo'].path, 'main.pdf'),
+            os.path.join(project['repo'].path, project['main']),
             os.path.join(UNTRACKED_PATH, project['path']+".pdf")
         )
 

@@ -1,5 +1,7 @@
 UNTRACKED_PATH = "repositorios"
 
+COMPILER = "pdflatex"
+
 SAE_COUNTER_GITHUB = "https://github.com/comissao-aerodesign/PyAeroCounter.git"
 SAE_COUNTER_PATH = "PyAeroCounter"
 
