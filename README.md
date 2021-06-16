@@ -1,5 +1,5 @@
 # HarpiaAeroCounter
-Contador de palavras para a Competição AeroDesign. // Word counter for the Aerodesign Competition
+Contador de palavras para a Competição AeroDesign. // Word counter for the Aerodesign Competition.
 
 Author:  Member of [Harpia Aerodesign](https://www.facebook.com/HarpiaAeroDesign)
 
