@@ -111,6 +111,6 @@ class HarpiaAeroCounter:
 
 if __name__ == "__main__":
     harpiaAeroCounter = HarpiaAeroCounter()
-    # harpiaAeroCounter.loop()
-    # harpiaAeroCounter.print()
+    harpiaAeroCounter.loop()
+    harpiaAeroCounter.print()
     harpiaAeroCounter.clean()
