@@ -1,5 +1,5 @@
 # HarpiaAeroCounter
-Contador de palavras para a Competição AeroDesign // Word counter for the Aerodesign Competition
+Contador de palavras para a Competição AeroDesign. // Word counter for the Aerodesign Competition
 
 Author:  Member of [Harpia Aerodesign](https://www.facebook.com/HarpiaAeroDesign)
 
@@ -7,7 +7,7 @@ Author:  Member of [Harpia Aerodesign](https://www.facebook.com/HarpiaAeroDesign
 
 ## 1) WINDOWS: standalone application 
 
-Windows is only for Counter Strike. If you want to fell pain, fell by yourself
+Windows is only for Counter Strike. If you want to fell pain, fell by yourself.
 
 ## 2)  Dependencies
 
