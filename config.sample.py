@@ -9,6 +9,7 @@ PROJECTS_OVERLEAF = [
     {
         'name': "<Nome do projeto>",
         'path': "<Pasta_do_projeto>",
+        'main': "<Arquivo tex>",
         'url': "https://git.overleaf.com/<SUA_URL_OVERLEAF_GIT>"
     },
 ]

@@ -47,13 +47,14 @@ class HarpiaAeroCounter:
 
     def compiler(self, project):
         Popen(
-            [COMPILER, COMPILER_PARAMS, "main.tex"],
+            [COMPILER, COMPILER_PARAMS, project['main']],
             cwd=project['repo'].path,
             stdout=DEVNULL,
             stderr=STDOUT
         ).wait()
         os.rename(
-            os.path.join(project['repo'].path, project['main']),
+            # os.path.join(project['repo'].path, project['main']),
+            os.path.join(project['repo'].path, "main.pdf"),
             os.path.join(UNTRACKED_PATH, project['path']+".pdf")
         )
 
