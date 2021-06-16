@@ -15,6 +15,7 @@ class GitManager:
     def pull(self):
         try:
             self.repo = git.Repo(self.path)
+            self.repo.git.reset('--hard')
             current = self.repo.head.commit
             self.repo.remotes.origin.pull()
             if current != self.repo.head.commit:

@@ -91,6 +91,12 @@ class HarpiaAeroCounter:
                 self.content[project['path']]['name'] = project['name']
         redo = False
 
+    def clean(self):
+        dirs = os.listdir(UNTRACKED_PATH)
+        for item in dirs:
+            if not item.endswith(".txt") and not item.endswith(".pdf") and os.path.isfile(os.path.join(UNTRACKED_PATH, item)):
+                os.remove(os.path.join(UNTRACKED_PATH, item))
+
     def print(self):
         print("\n")
         print("#"*230)
@@ -105,5 +111,6 @@ class HarpiaAeroCounter:
 
 if __name__ == "__main__":
     harpiaAeroCounter = HarpiaAeroCounter()
-    harpiaAeroCounter.loop()
-    harpiaAeroCounter.print()
+    # harpiaAeroCounter.loop()
+    # harpiaAeroCounter.print()
+    harpiaAeroCounter.clean()
