@@ -20,7 +20,7 @@ The python dependencies are on the file **requirements.txt**, to install you can
  The LaTeX compiler dependencies are on **requirements.system**. Because I am a very lazy person I put the package **texmaker** and hope that all the LaTeX dependencies works fine. You could be able to install this dependencies with the follow command:
 
 ```bash
-    xargs -a packages.txt sudo apt-get install
+    xargs -a requirements.system sudo apt-get install
 ```
 
 ## 3) Configuration
